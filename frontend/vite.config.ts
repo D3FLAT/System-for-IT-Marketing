@@ -1,0 +1,13 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+// Запросы /api/* проксируются на backend (localhost:8000), CORS настраивать не нужно.
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      "/api": { target: "http://localhost:8000", rewrite: (p) => p.replace(/^\/api/, "") },
+    },
+  },
+});
